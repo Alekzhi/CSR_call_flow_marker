@@ -70,12 +70,14 @@ class CallFlowApp:
         self.menu.add_command(label="Save", command=self.save_changes)
         self.root.config(menu=self.menu)
         
+        
     # Create a function to toggle label state
     def toggle_label_state(self, label):
         if label["relief"] == "raised":
             label.config(relief="sunken", fg="grey")
         else:
             label.config(relief="raised", fg="black")
+
 
     # Create a function to enable self.editing
     def enable_editing(self):
@@ -88,6 +90,7 @@ class CallFlowApp:
                 text_field.insert("1.0", self.sentences[str(i)])
                 text_field.pack(fill=tk.BOTH, padx=5, pady=5)
                 self.editing_text_fields.append(text_field)  # Transferring each sentence to each text_field value
+
 
     # Create a function to save changes
     def save_changes(self):
