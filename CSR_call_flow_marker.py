@@ -7,7 +7,7 @@ import json
         
 class CallFlowApp:
     def __init__(self):
-        # Create the main window
+        # Create the main window. let's have the common: root rather than window
         self.root = tk.Tk()
         self.root.title("Customer Support - Call-Flow Marker")
         self.FONT = ("Consolas", 13)
