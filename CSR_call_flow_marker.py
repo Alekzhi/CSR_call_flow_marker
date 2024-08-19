@@ -1,54 +1,58 @@
-# An app to help the CSR Agent mark the Call-Flow
-# This is for Andy and Jerum
-# TODO: Add a file self.menu to add/edit more call flows
-
+"""An app to help the CSR Agent mark the Call-Flow
+This is for Andy and Jerum
+Recommendation: Add a file self.menu to add/edit more call flows
+"""
 
 import tkinter as tk
 import json
+
         
 class CallFlowApp:
+    """
+    A class to create a Call-Flow marker app
+    """
+
     def __init__(self):
+        """
+        Initialize the CallFlowApp
+        """
         # Create the main window. let's have the common: root rather than window
         self.root = tk.Tk()
         self.root.title("Customer Support - Call-Flow Marker")
         self.FONT = ("Consolas", 13)
+        self.editing = 0  # Contents are not yet being edited
+        self.editing_text_fields = []  # This is where I will transfer contents from sentences
         self.editing = 0 # Contents are not yet being edited
         self.editing_text_fields = [] # This is where I will transfer contents from sentences
         self.filepath = "CSR_call_flow.txt"
         self.labels = []
         self.sentences = {  # Default values
-                "0":"[Opening the Call]\n" \
+            "0": "[Opening the Call]\n" \
                 "Hello and thank you for calling [Company Name] Customer Support.\n" \
                 "My name is [Your Name]. How can I assist you today?",
-
-                "1":"[Empathize/Apologize/Assure]\n" \
+            "1": "[Empathize/Apologize/Assure]\n" \
                 "I'm sorry to hear that you're experiencing an issue.\n" \
                 "Please know that we're here to help and make things right.",
-
-                "2":"[Confirm Account]\n" \
+            "2": "[Confirm Account]\n" \
                 "To better assist you, could you please provide your\n" \
                 "account details or order number, if you have them?",
-
-                "3":"[Probe/Ask Questions]\n" \
+            "3": "[Probe/Ask Questions]\n" \
                 "Certainly, let's work together to get to the bottom of this.\n" \
                 "Can you please provide more details about the issue you're facing\n" \
                 "or the question you have? The more information you can share, the better I can assist you.",
-
-                "4":"[Solve Problem/Answer Question]\n" \
+            "4": "[Solve Problem/Answer Question]\n" \
                 "Thank you for sharing the details. Based on what you've described,\n"\
                 "here's how we can address the situation: [Provide solution or answer to the question].\n" \
                 "Please let me know if this resolves your concern or if you have any further questions.",
-
-                "5":"[Offer Additional Assistance]\n" \
+            "5": "[Offer Additional Assistance]\n" \
                 "Is there anything else you'd like to discuss or inquire about?\n" \
                 "Our goal is to ensure your complete satisfaction, so feel free to ask any other questions or\n" \
                 "share any additional concerns you might have.",
-
-                "6":"[Close the Call]\n" \
+            "6": "[Close the Call]\n" \
                 "Thank you for reaching out to us today. I'm glad I could assist you with your concern.\n" \
                 "If you encounter any more issues in the future or have more questions,\n " \
                 "don't hesitate to call us again. Have a great day!",
-            }
+        }
         try:
             with open(self.filepath, "r") as f:
                 if f:
@@ -60,7 +64,7 @@ class CallFlowApp:
         # Create raised self.labels for each sentence
         for sentence in self.sentences.values():
             self.label = tk.Label(self.root, text=sentence, font=self.FONT,
-                            relief="raised", padx=10, pady=10)
+                                  relief="raised", padx=10, pady=10)
             self.label.pack(fill=tk.BOTH, side="top", padx=5, pady=5)
             self.label.bind("<Button-1>", lambda event, label=self.label: self.toggle_label_state(label))
             self.labels.append(self.label)
@@ -74,6 +78,9 @@ class CallFlowApp:
         
     # Create a function to toggle label state
     def toggle_label_state(self, label):
+        """
+        Toggle the state of the label
+        """
         if label["relief"] == "raised":
             label.config(relief="sunken", fg="grey")
         else:
@@ -82,6 +89,9 @@ class CallFlowApp:
 
     # Create a function to enable self.editing
     def enable_editing(self):
+        """
+        Enable self.editing
+        """
         self.editing += 1  # If it's the first time the menu button is clicked
         if self.editing and self.editing < 2:  # If not clicked twice (to avoid overflow)
             self.editing_text_fields = []  # # Clear text_fields first
@@ -95,6 +105,9 @@ class CallFlowApp:
 
     # Create a function to save changes
     def save_changes(self):
+        """
+        Save changes
+        """
         if self.editing:
             self.editing = 0  # Resets counter to zero
             for i, text_field in enumerate(self.editing_text_fields):
@@ -107,6 +120,9 @@ class CallFlowApp:
 
 
     def run(self):
+        """
+        Run the app
+        """
         self.root.mainloop()
 
 
